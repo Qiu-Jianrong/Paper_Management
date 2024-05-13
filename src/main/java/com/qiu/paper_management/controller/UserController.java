@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+@CrossOrigin
 @RestController
 @Validated
 @RequestMapping("/user")
