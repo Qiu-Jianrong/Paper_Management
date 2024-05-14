@@ -19,9 +19,9 @@ public class ArticleController {
 
 
     @PostMapping
-    public Result postArticle(@RequestBody Article_Author articleWithAuthor){
+    public Result postArticle(@RequestBody @Validated(Article.Add.class) Article_Author articleWithAuthor){
         if (articleService.duplicate(articleWithAuthor.getArticle().getTitle()))
-            throw new RuntimeException("该文章已存在!");
+            throw new RuntimeException("同名文章已存在!");
         articleService.postArticle(articleWithAuthor);
         return Result.success();
     }
@@ -44,6 +44,15 @@ public class ArticleController {
         if(article == null)
             throw new RuntimeException("文章不存在或已经被删除");
         return Result.success(article);
+    }
+
+    @PutMapping
+    public Result updateArticle(@RequestBody @Validated(Article.Update.class) Article article){
+        // 1. 确保是自己的文章
+        authorization(article.getId());
+
+        articleService.update(article);
+        return Result.success();
     }
 
     // 确保文章存在且删除的是自己的文章

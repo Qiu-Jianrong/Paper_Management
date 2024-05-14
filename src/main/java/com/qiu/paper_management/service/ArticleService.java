@@ -19,4 +19,6 @@ public interface ArticleService {
 
     void deleteArticle(Integer id);
     List<Integer> findAuthorsById(Integer articleId);
+
+    void update(Article article);
 }

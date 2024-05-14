@@ -54,6 +54,12 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Integer> findAuthorsById(Integer articleId){
         return articleMapper.findAuthorsById(articleId);
     }
+
+    @Override
+    public void update(Article article) {
+        articleMapper.update(article);
+    }
+
     @Override
     public boolean duplicate(String title) {
         return articleMapper.findIdByTitle(title) != null;

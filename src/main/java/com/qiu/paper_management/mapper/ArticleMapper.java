@@ -40,4 +40,5 @@ public interface ArticleMapper {
 
     void deleteArticle(Integer id);
 
+    void update(Article article);
 }

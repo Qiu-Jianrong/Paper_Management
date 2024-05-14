@@ -23,4 +23,18 @@
         delete from paper_management.category_article where article_id=#{id};
         delete from paper_management.article where id=#{id};
     </delete>
+    <update id="update">
+        update paper_management.article
+        <set>
+            <if test="title!=null">title=#{title},</if>
+            <if test="content!=null">content=#{content},</if>
+            <if test="paperAbstract">paper_abstract=#{paperAbstract},</if>
+            <if test="keywords">keywords=#{keywords},</if>
+            <if test="state">state=#{state},</if>
+            update_time=now()
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
 </mapper>
