@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -61,6 +62,39 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<String> getLeaderByArticleId(Integer id) {
+        List<Integer> leaders = articleMapper.getLeaderByArticleId(id);
+        List<String> leadersName = new ArrayList<>();
+        for (Integer leaderId : leaders){
+            String LeaderId = articleMapper.getAuthorNameById(leaderId);
+            leadersName.add(LeaderId);
+        }
+        return leadersName;
+    }
+
+    @Override
+    public List<String> getCorrByArticleId(Integer id) {
+        List<Integer> coors = articleMapper.getCoorsByArticleId(id);
+        List<String> usernames = new ArrayList<>();
+        for (Integer userId : coors){
+            String username = articleMapper.getAuthorNameById(userId);
+            usernames.add(username);
+        }
+        return usernames;
+    }
+
+    @Override
+    public List<String> getOthersByArticleId(Integer id) {
+        List<Integer> others = articleMapper.getOthersByArticleId(id);
+        List<String> usernames = new ArrayList<>();
+        for (Integer userId : others){
+            String username = articleMapper.getAuthorNameById(userId);
+            usernames.add(username);
+        }
+        return usernames;
+    }
+
+    @Override
     public boolean duplicate(String title) {
         return articleMapper.findIdByTitle(title) != null;
     }
@@ -75,6 +109,9 @@ public class ArticleServiceImpl implements ArticleService {
 
         // 3. 开启mapper查询
         List<Article> as =  articleMapper.list(categoryId);
+        for (Article article : as){
+            article.setCategoryId(articleMapper.findArticleCategory(article.getId()));
+        }
         Page<Article> articles = (Page<Article>) as;
 
         pb.setTotal(articles.getTotal());

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @CrossOrigin
@@ -39,11 +41,22 @@ public class ArticleController {
     }
 
     @GetMapping("/detail")
-    public Result<Article> getDetail(@RequestParam Integer id){
+    public Result<Article_Author> getDetail(@RequestParam Integer id){
+        Article_Author article_author = new Article_Author();
+
+        // 1. 填充article本身
         Article article = articleService.getDetail(id);
         if(article == null)
             throw new RuntimeException("文章不存在或已经被删除");
-        return Result.success(article);
+        article_author.setArticle(article);
+
+        // 2. 填充作者列表
+
+        article_author.setLeadAuthors(articleService.getLeaderByArticleId(article.getId()));
+        article_author.setCorrespondingAuthors(articleService.getCorrByArticleId(article.getId()));
+        article_author.setOtherAuthors(articleService.getOthersByArticleId(article.getId()));
+
+        return Result.success(article_author);
     }
 
     @PutMapping

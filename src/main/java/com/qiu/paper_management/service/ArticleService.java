@@ -21,4 +21,10 @@ public interface ArticleService {
     List<Integer> findAuthorsById(Integer articleId);
 
     void update(Article article);
+
+    List<String> getLeaderByArticleId(Integer id);
+
+    List<String> getCorrByArticleId(Integer id);
+
+    List<String> getOthersByArticleId(Integer id);
 }
