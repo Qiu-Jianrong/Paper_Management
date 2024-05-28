@@ -15,6 +15,18 @@
             </if>
         </where>
     </select>
+    <select id="findArticleByAuthor" resultType="java.lang.Integer">
+        select distinct article_author.article_id from paper_management.article_author join paper_management.category_article
+        <!--where标签实现可选的条件，用if环绕-->
+        <where>
+            <if test="categoryId!=null">
+                category_id=#{categoryId}
+            </if>
+            <if test="authorId!=null">
+                and author_id=#{authorId}
+            </if>
+        </where>
+    </select>
     <select id="findArticleCategory" resultType="java.lang.Integer">
         select category_id from paper_management.category_article where article_id=#{articleId};
     </select>

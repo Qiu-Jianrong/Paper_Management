@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -92,6 +93,18 @@ public class ArticleServiceImpl implements ArticleService {
             usernames.add(username);
         }
         return usernames;
+    }
+
+    @Override
+    public List<Article> listMine(Integer categoryId, Integer userId) {
+        List<Integer> asId = articleMapper.findArticleByAuthor(userId, categoryId);
+
+        List<Article> as =  new ArrayList<>();
+        for (Integer articleId : asId){
+            as.add(articleMapper.findById(articleId));
+        }
+
+        return as;
     }
 
     @Override

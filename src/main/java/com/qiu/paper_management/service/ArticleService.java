@@ -27,4 +27,6 @@ public interface ArticleService {
     List<String> getCorrByArticleId(Integer id);
 
     List<String> getOthersByArticleId(Integer id);
+
+    List<Article> listMine(Integer categoryId, Integer userId);
 }

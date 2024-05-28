@@ -52,4 +52,6 @@ public interface ArticleMapper {
 
     @Select("select author_id from paper_management.article_author where article_id=#{id} and is_corresponding = FALSE and is_leader=FALSE")
     List<Integer> getOthersByArticleId(Integer id);
+
+    List<Integer> findArticleByAuthor(Integer authorId, Integer categoryId);
 }

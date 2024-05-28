@@ -40,6 +40,14 @@ public class ArticleController {
         return Result.success(pb);
     }
 
+    @GetMapping("/mine")
+    public Result<List<Article>> myArticle(
+            @RequestParam(required = false) Integer categoryId
+    ){
+        List<Article> pb = articleService.listMine(categoryId, ThreadLocalUtil.getId());
+        return Result.success(pb);
+    }
+
     @GetMapping("/detail")
     public Result<Article_Author> getDetail(@RequestParam Integer id){
         Article_Author article_author = new Article_Author();
