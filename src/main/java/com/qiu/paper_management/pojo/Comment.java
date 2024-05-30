@@ -11,6 +11,7 @@ public class Comment {
     private Integer categoryId;
     private Integer criticId;
     private String criticEmail;
+    private String criticFace;
     private String content;
     private LocalDateTime updateTime;
     private Integer parentId;

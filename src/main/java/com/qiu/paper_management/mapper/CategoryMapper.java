@@ -35,4 +35,7 @@ public interface CategoryMapper {
 
     @Delete("delete from paper_management.category_article where article_id=#{articleId} and category_id=#{categoryId}")
     void removeArticle(Integer articleId, Integer categoryId);
+
+    @Delete("delete from paper_management.category_article where category_id=#{categoryId};")
+    void deleteCategoryArticle(Integer categoryId);
 }

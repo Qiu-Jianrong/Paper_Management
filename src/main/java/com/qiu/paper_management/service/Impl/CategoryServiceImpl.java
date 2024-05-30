@@ -64,6 +64,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategory(Integer id) {
+//        1. 从category_article删除映射
+        categoryMapper.deleteCategoryArticle(id);
+//        2. 正式删除文献库
         categoryMapper.deleteCategory(id);
     }
 
