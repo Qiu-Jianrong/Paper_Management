@@ -121,7 +121,11 @@
             <artifactId>easyexcel</artifactId>
             <version>2.2.6</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.fnlp</groupId>
+            <artifactId>fnlp-core</artifactId>
+            <version>2.1</version>
+        </dependency>
     </dependencies>
 
     <build>

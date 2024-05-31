@@ -52,6 +52,11 @@ public class CategoryController {
         return Result.success(categoryService.allCategory());
     }
 
+    @GetMapping("/search")
+    public Result<List<Category>> search(@RequestParam String q, @RequestParam Integer threshold){
+        return Result.success(categoryService.search(q, threshold));
+    }
+
     // 文献库详情
     @GetMapping("/detail")
     public Result<Category> categoryDetail(@RequestParam Integer id){

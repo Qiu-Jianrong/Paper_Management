@@ -79,4 +79,10 @@ public class CategoryServiceImpl implements CategoryService {
             throw new RuntimeException("不太懂如何delete会引发异常");
         }
     }
+
+    @Override
+    public List<Category> search(String q, Integer threshold) {
+        q = "%" + q + "%";
+        return categoryMapper.search(q, threshold);
+    }
 }
