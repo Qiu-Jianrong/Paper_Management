@@ -17,4 +17,8 @@ public interface UserService {
     void updatePwd(String newPwd);
 
     List<User> getAllUsers();
+
+    String getImgById(Integer criticId);
+
+    String getEmailById(Integer criticId);
 }

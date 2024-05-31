@@ -5,6 +5,7 @@ import com.qiu.paper_management.pojo.Result;
 import com.qiu.paper_management.service.ArticleService;
 import com.qiu.paper_management.service.CategoryService;
 import com.qiu.paper_management.service.OtherService;
+import com.qiu.paper_management.service.UserService;
 import com.qiu.paper_management.utils.OssUtil;
 import com.qiu.paper_management.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @CrossOrigin
@@ -27,6 +29,8 @@ public class OtherController {
     ArticleService articleService;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    UserService userService;
     @PostMapping("/upload")
     public Result<String> Upload(MultipartFile file, Integer id) throws Exception {
         String originalFilename = file.getOriginalFilename();
@@ -63,5 +67,21 @@ public class OtherController {
         comment.setCriticId(ThreadLocalUtil.getId());
         otherService.postComment(comment);
         return Result.success();
+    }
+
+    @GetMapping("/comment")
+    public Result<List<Comment>> getComment(@RequestParam Integer categoryId, @RequestParam Integer articleId){
+        // 1. 校验合法性
+        Existence(articleId, categoryId);
+
+        // 2. 返回对应评论区
+        List<Comment> comments = otherService.getComment(articleId, categoryId);
+
+        // 3. 附上评论者头像和email
+        for (Comment comment : comments){
+            comment.setCriticFace(userService.getImgById(comment.getCriticId()));
+            comment.setCriticEmail(userService.getEmailById(comment.getCriticId()));
+        }
+        return Result.success(comments);
     }
 }

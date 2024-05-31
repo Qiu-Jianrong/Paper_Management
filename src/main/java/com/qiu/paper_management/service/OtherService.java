@@ -2,6 +2,8 @@ package com.qiu.paper_management.service;
 
 import com.qiu.paper_management.pojo.Comment;
 
+import java.util.List;
+
 public interface OtherService {
     void uploadFile(Integer id, String url);
 
@@ -9,4 +11,7 @@ public interface OtherService {
     String findObjById(Integer id);
 
     void postComment(Comment comment);
+
+
+    List<Comment> getComment(Integer articleId, Integer categoryId);
 }

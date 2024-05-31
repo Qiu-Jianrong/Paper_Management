@@ -30,4 +30,10 @@ public interface UserMapper {
 
     @Select("select * from paper_management.user")
     List<User> getAllUsers();
+
+    @Select("select user_pic from paper_management.user where id=#{criticId}")
+    String getImgById(Integer criticId);
+
+    @Select("select email from paper_management.user where id=#{criticId}")
+    String getEmailById(Integer criticId);
 }

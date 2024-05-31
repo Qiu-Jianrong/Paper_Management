@@ -56,4 +56,14 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return userMapper.getAllUsers();
     }
+
+    @Override
+    public String getImgById(Integer criticId) {
+        return userMapper.getImgById(criticId);
+    }
+
+    @Override
+    public String getEmailById(Integer criticId) {
+        return userMapper.getEmailById(criticId);
+    }
 }
