@@ -108,6 +108,12 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<Article> search(String q, Integer threshold, Integer categoryId) {
+        q = "%" + q + "%";
+        return articleMapper.search(q, threshold, categoryId);
+    }
+
+    @Override
     public boolean duplicate(String title) {
         return articleMapper.findIdByTitle(title) != null;
     }

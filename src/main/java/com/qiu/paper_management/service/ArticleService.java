@@ -29,4 +29,6 @@ public interface ArticleService {
     List<String> getOthersByArticleId(Integer id);
 
     List<Article> listMine(Integer categoryId, Integer userId);
+
+    List<Article> search(String q, Integer threshold, Integer categoryId);
 }

@@ -8,8 +8,8 @@ import java.util.List;
 
 @Mapper
 public interface CategoryMapper {
-    @Insert("insert into paper_management.category(category_name, category_alias, create_user, create_time, update_time, category_public) " +
-            "VALUES (#{categoryName}, #{categoryAlias}, #{createUser}, #{createTime}, #{updateTime}, #{categoryPublic});")
+    @Insert("insert into paper_management.category(category_name, category_alias, create_user, create_time, update_time, category_public, score, score_amount) " +
+            "VALUES (#{categoryName}, #{categoryAlias}, #{createUser}, #{createTime}, #{updateTime}, #{categoryPublic},0,0);")
     void addCategory(Category category);
 
     @Insert("insert into paper_management.category_article(category_id, article_id) values (#{categoryId}, #{articleId});")

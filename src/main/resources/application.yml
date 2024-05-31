@@ -3,7 +3,7 @@ spring:
     username: root
     password: fDu241530
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/paper_management?allowMultiQueries=true
+    url: jdbc:mysql://localhost:3306/paper_management?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8
   data:
     redis:
       host: localhost

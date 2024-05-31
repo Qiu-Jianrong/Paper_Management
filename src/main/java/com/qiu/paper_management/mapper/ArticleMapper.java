@@ -14,8 +14,8 @@ public interface ArticleMapper {
 
     @Select("select username from paper_management.user where id = #{id}")
     String getAuthorNameById(Integer id);
-    @Insert("insert into paper_management.article(title, content, state, create_time, update_time, paper_abstract, paper_pdf, keywords) " +
-            "VALUES (#{title}, #{content}, #{state}, now(), now(), #{paperAbstract}, #{paperPdf}, #{keywords})")
+    @Insert("insert into paper_management.article(title, content, state, create_time, update_time, paper_abstract, paper_pdf, keywords, score, score_amount) " +
+            "VALUES (#{title}, #{content}, #{state}, now(), now(), #{paperAbstract}, #{paperPdf}, #{keywords}, 0, 0)")
     void addArticle(Article article);
 
 
@@ -54,4 +54,7 @@ public interface ArticleMapper {
     List<Integer> getOthersByArticleId(Integer id);
 
     List<Integer> findArticleByAuthor(Integer authorId, Integer categoryId);
+
+
+    List<Article> search(String q, Integer threshold, Integer categoryId);
 }
