@@ -1,6 +1,7 @@
 package com.qiu.paper_management.service.Impl;
 
 import com.qiu.paper_management.mapper.OtherMapper;
+import com.qiu.paper_management.pojo.Comment;
 import com.qiu.paper_management.service.OtherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,11 @@ public class OtherServiceImpl implements OtherService {
     public String findObjById(Integer id) {
         String url = otherMapper.findObjById(id);
         return url.substring(url.lastIndexOf("/") + 1);
+    }
+
+    @Override
+    public void postComment(Comment comment) {
+//        System.out.println(comment);
+        otherMapper.postComment(comment);
     }
 }

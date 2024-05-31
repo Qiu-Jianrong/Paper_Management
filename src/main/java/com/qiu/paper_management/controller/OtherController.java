@@ -1,14 +1,14 @@
 package com.qiu.paper_management.controller;
 
+import com.qiu.paper_management.pojo.Comment;
 import com.qiu.paper_management.pojo.Result;
 import com.qiu.paper_management.service.OtherService;
 import com.qiu.paper_management.utils.OssUtil;
+import com.qiu.paper_management.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -17,6 +17,7 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController
+@Validated
 public class OtherController {
     @Autowired
     OtherService otherService;
@@ -30,5 +31,12 @@ public class OtherController {
         String url = OssUtil.uploadFile(originalObj, filename, file.getInputStream());
         otherService.uploadFile(id, url);
         return Result.success(url);
+    }
+
+    @PostMapping("/comment")
+    public Result postComment(@RequestBody @Validated Comment comment){
+        comment.setCriticId(ThreadLocalUtil.getId());
+        otherService.postComment(comment);
+        return Result.success();
     }
 }
