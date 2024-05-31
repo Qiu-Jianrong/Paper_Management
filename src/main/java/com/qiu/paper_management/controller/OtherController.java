@@ -2,6 +2,8 @@ package com.qiu.paper_management.controller;
 
 import com.qiu.paper_management.pojo.Comment;
 import com.qiu.paper_management.pojo.Result;
+import com.qiu.paper_management.service.ArticleService;
+import com.qiu.paper_management.service.CategoryService;
 import com.qiu.paper_management.service.OtherService;
 import com.qiu.paper_management.utils.OssUtil;
 import com.qiu.paper_management.utils.ThreadLocalUtil;
@@ -21,6 +23,10 @@ import java.util.UUID;
 public class OtherController {
     @Autowired
     OtherService otherService;
+    @Autowired
+    ArticleService articleService;
+    @Autowired
+    CategoryService categoryService;
     @PostMapping("/upload")
     public Result<String> Upload(MultipartFile file, Integer id) throws Exception {
         String originalFilename = file.getOriginalFilename();
@@ -33,8 +39,27 @@ public class OtherController {
         return Result.success(url);
     }
 
+    // 对comment的参数进行校验
+    // 1. category_id和article_id有且仅有一个为-1，且另一个一定是存在的
+    private void Existence(Integer articleId, Integer categoryId){
+        // 有且仅有一个为-1
+        if (articleId * categoryId > 0)
+            throw new RuntimeException("参数不合法！您不能同时评论文章和文献库！");
+        if (articleId >= 0){
+            if (articleService.getDetail(articleId) == null)
+                throw new RuntimeException("您评论的文章不存在或已被删除！");
+        }
+        if (categoryId >= 0){
+            if (categoryService.findCategoryById(categoryId) == null)
+                throw new RuntimeException("您评论的文献库不存在或已被删除！");
+        }
+    }
     @PostMapping("/comment")
     public Result postComment(@RequestBody @Validated Comment comment){
+        // 1. 校验合法性
+        Existence(comment.getArticleId(), comment.getCategoryId());
+
+        // 2. 发布评论
         comment.setCriticId(ThreadLocalUtil.getId());
         otherService.postComment(comment);
         return Result.success();
