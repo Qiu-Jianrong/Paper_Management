@@ -31,7 +31,7 @@ public class OtherController {
     CategoryService categoryService;
     @Autowired
     UserService userService;
-    @PostMapping("/upload")
+    @PostMapping("/uploadPDF")
     public Result<String> Upload(MultipartFile file, Integer id) throws Exception {
         String originalFilename = file.getOriginalFilename();
         // 将文件存储到oss云服务器上，UUID保证名字唯一，不因文件名重复而发生覆盖
@@ -39,7 +39,17 @@ public class OtherController {
 //        file.transferTo(new File("C:\\Users\\Qiu\\Desktop\\files\\" + filename));
         String originalObj = otherService.findObjById(id);
         String url = OssUtil.uploadFile(originalObj, filename, file.getInputStream());
+        // 一篇文章只有一个对应的pdf
         otherService.uploadFile(id, url);
+        return Result.success(url);
+    }
+    @PostMapping("/upload")
+    public Result<String> Upload(MultipartFile file) throws Exception {
+        String originalFilename = file.getOriginalFilename();
+        // 将文件存储到oss云服务器上，UUID保证名字唯一，不因文件名重复而发生覆盖
+        String filename = UUID.randomUUID().toString() + originalFilename.substring(originalFilename.lastIndexOf('.'));
+//        file.transferTo(new File("C:\\Users\\Qiu\\Desktop\\files\\" + filename));
+        String url = OssUtil.uploadFile(null, filename, file.getInputStream());
         return Result.success(url);
     }
 
