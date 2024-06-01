@@ -27,7 +27,7 @@ public interface CategoryMapper {
     @Select("select * from paper_management.category where id=#{id}")
     Category findCategoryById(Integer id);
 
-    @Update("update paper_management.category set category_name=#{categoryName}, category_alias=#{categoryAlias}, category_public=#{categoryPublic},update_time=now() where id=#{id}")
+    @Update("update paper_management.category set category_name=#{categoryName}, category_alias=#{categoryAlias}, category_public=#{categoryPublic},update_time=now(), score=#{score}, score_amount=#{scoreAmount} where id=#{id}")
     void updateCategory(Category category);
 
     @Delete("delete from paper_management.category where id=#{id}")

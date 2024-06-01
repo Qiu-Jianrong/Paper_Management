@@ -6,6 +6,7 @@ import com.qiu.paper_management.mapper.ArticleMapper;
 import com.qiu.paper_management.mapper.UserMapper;
 import com.qiu.paper_management.pojo.*;
 import com.qiu.paper_management.service.ArticleService;
+import com.qiu.paper_management.utils.AnsjUtil;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -109,7 +110,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> search(String q, Integer threshold, Integer categoryId) {
-        q = "%" + q + "%";
+//        q = AnsjUtil.parse(q);
+//        System.out.println(q);
         return articleMapper.search(q, threshold, categoryId);
     }
 

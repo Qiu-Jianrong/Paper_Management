@@ -38,14 +38,14 @@ public class OtherServiceImpl implements OtherService {
         // 对应地更新得分，\bar S = \bar S + (S - \bar S)/(score_amount + 1)
         if(comment.getArticleId() > 0){
             Article article = articleMapper.findById(comment.getArticleId());
-            float score = (comment.getScore() - article.getScore()) / (article.getScoreAmount() + 1);
+            float score = (comment.getScore() - article.getScore()) / (article.getScoreAmount() + 1) + article.getScore();
             article.setScore(score);
             article.setScoreAmount(article.getScoreAmount() + 1);
             articleMapper.update(article);
         }
         else{
             Category category = categoryMapper.findCategoryById(comment.getCategoryId());
-            float score = (comment.getScore() - category.getScore()) / (category.getScoreAmount() + 1);
+            float score = (comment.getScore() - category.getScore()) / (category.getScoreAmount() + 1) + category.getScore();
             category.setScore(score);
             category.setScoreAmount(category.getScoreAmount() + 1);
             categoryMapper.updateCategory(category);

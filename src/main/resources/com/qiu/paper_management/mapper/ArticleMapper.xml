@@ -51,6 +51,8 @@
             <if test="paperAbstract">paper_abstract=#{paperAbstract},</if>
             <if test="keywords">keywords=#{keywords},</if>
             <if test="state">state=#{state},</if>
+            <if test="score">score=#{score},</if>
+            <if test="scoreAmount">score_amount=#{scoreAmount},</if>
             update_time=now()
         </set>
         <where>
