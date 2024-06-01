@@ -115,6 +115,7 @@ public class ArticleServiceImpl implements ArticleService {
         q = jiebaUtil.parse(q);
         System.out.println(q);
 //        q = "%" + q + "%";
+
         List<Article> as = articleMapper.search(q, threshold, categoryId);
         for (Article article : as){
             article.setCategoryId(articleMapper.findArticleCategory(article.getId()));
