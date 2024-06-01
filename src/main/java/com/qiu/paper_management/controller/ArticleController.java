@@ -29,8 +29,14 @@ public class ArticleController {
     }
 
     @GetMapping("/search")
-    public Result<List<Article>> search(@RequestParam String q, @RequestParam Integer threshold, @RequestParam(required = false) Integer categoryId){
-        List<Article> as = articleService.search(q, threshold, categoryId);
+    public Result<PageBean<Article>> search(
+            @RequestParam Integer pageNum,
+            @RequestParam Integer pageSize,
+            @RequestParam String q,
+            @RequestParam Integer threshold,
+            @RequestParam(required = false) Integer categoryId
+    ){
+        PageBean<Article> as = articleService.search(pageNum, pageSize, q, threshold, categoryId);
         return Result.success(as);
     }
     @GetMapping

@@ -111,16 +111,25 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> search(String q, Integer threshold, Integer categoryId) {
+    public PageBean<Article> search(Integer pageNum, Integer pageSize, String q, Integer threshold, Integer categoryId) {
+        // 1. 创建pageBean对象
+        PageBean pb = new PageBean<Article>();
+
+        // 2. 分页查询start，将自动拼接pn与ps
+        PageHelper.startPage(pageNum, pageSize);
+
+        // 3. 开启mapper查询
         q = jiebaUtil.parse(q);
         System.out.println(q);
-//        q = "%" + q + "%";
-
-        List<Article> as = articleMapper.search(q, threshold, categoryId);
+        List<Article> as =  articleMapper.search(q, threshold, categoryId);
         for (Article article : as){
             article.setCategoryId(articleMapper.findArticleCategory(article.getId()));
         }
-        return as;
+        Page<Article> articles = (Page<Article>) as;
+
+        pb.setTotal(articles.getTotal());
+        pb.setItems(articles.getResult());
+        return pb;
     }
 
     @Override
