@@ -1,5 +1,6 @@
 package com.qiu.paper_management.controller;
 
+import com.qiu.paper_management.pojo.Category;
 import com.qiu.paper_management.pojo.Comment;
 import com.qiu.paper_management.pojo.Result;
 import com.qiu.paper_management.service.ArticleService;
@@ -55,6 +56,7 @@ public class OtherController {
 
     // 对comment的参数进行校验
     // 1. category_id和article_id有且仅有一个为-1，且另一个一定是存在的
+    // 2. 文献库只有公开的才能允许读写
     private void Existence(Integer articleId, Integer categoryId){
         // 有且仅有一个为-1
         if (articleId * categoryId > 0)
@@ -64,8 +66,11 @@ public class OtherController {
                 throw new RuntimeException("您评论的文章不存在或已被删除！");
         }
         if (categoryId >= 0){
-            if (categoryService.findCategoryById(categoryId) == null)
+            Category category = categoryService.findCategoryById(categoryId);
+            if (category == null)
                 throw new RuntimeException("您评论的文献库不存在或已被删除！");
+            if (!category.isCategoryPublic())
+                throw new RuntimeException("该文献库为私有，不允许评论！");
         }
     }
     @PostMapping("/comment")
