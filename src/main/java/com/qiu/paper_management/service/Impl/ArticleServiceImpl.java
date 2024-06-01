@@ -6,7 +6,7 @@ import com.qiu.paper_management.mapper.ArticleMapper;
 import com.qiu.paper_management.mapper.UserMapper;
 import com.qiu.paper_management.pojo.*;
 import com.qiu.paper_management.service.ArticleService;
-import com.qiu.paper_management.utils.AnsjUtil;
+import com.qiu.paper_management.utils.JiebaUtil;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +23,8 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private JiebaUtil jiebaUtil;
 
     // 新增文章（可以是直接发布或者草稿）
     @Override
@@ -110,9 +112,14 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> search(String q, Integer threshold, Integer categoryId) {
-//        q = AnsjUtil.parse(q);
-//        System.out.println(q);
-        return articleMapper.search(q, threshold, categoryId);
+        q = jiebaUtil.parse(q);
+        System.out.println(q);
+//        q = "%" + q + "%";
+        List<Article> as = articleMapper.search(q, threshold, categoryId);
+        for (Article article : as){
+            article.setCategoryId(articleMapper.findArticleCategory(article.getId()));
+        }
+        return as;
     }
 
     @Override
