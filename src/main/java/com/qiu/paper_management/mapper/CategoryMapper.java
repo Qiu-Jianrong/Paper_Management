@@ -39,6 +39,6 @@ public interface CategoryMapper {
     @Delete("delete from paper_management.category_article where category_id=#{categoryId};")
     void deleteCategoryArticle(Integer categoryId);
 
-    @Select("SELECT * from paper_management.category where score>=#{threshold} and (category_name like #{q} or category_alias like #{q})")
+    @Select("SELECT * from paper_management.category where score>=#{threshold} and (category_name like #{q} or category_alias like #{q}) order by score")
     List<Category> search(String q, Integer threshold);
 }

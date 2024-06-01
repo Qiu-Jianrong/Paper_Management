@@ -20,6 +20,7 @@
             <if test="categoryId!=null">
                 and category_id=#{categoryId}
             </if>
+        order by score
 
     </select>
     <select id="findArticleByAuthor" resultType="java.lang.Integer">

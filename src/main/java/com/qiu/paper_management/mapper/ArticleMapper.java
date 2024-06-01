@@ -2,10 +2,7 @@ package com.qiu.paper_management.mapper;
 
 import com.qiu.paper_management.pojo.Article;
 import com.qiu.paper_management.pojo.Article_Category;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -57,4 +54,5 @@ public interface ArticleMapper {
 
 
     List<Article> search(String q, Integer threshold, Integer categoryId);
+
 }
