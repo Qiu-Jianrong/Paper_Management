@@ -81,8 +81,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> search(String q, Integer threshold) {
+    public List<Category> search(String q, Integer threshold, Integer userId) {
         q = "%" + q + "%";
-        return categoryMapper.search(q, threshold);
+        return categoryMapper.search(q, threshold, userId);
     }
 }

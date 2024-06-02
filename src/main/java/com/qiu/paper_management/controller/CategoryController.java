@@ -53,8 +53,12 @@ public class CategoryController {
     }
 
     @GetMapping("/search")
-    public Result<List<Category>> search(@RequestParam String q, @RequestParam Integer threshold){
-        return Result.success(categoryService.search(q, threshold));
+    public Result<List<Category>> search(
+            @RequestParam String q,
+            @RequestParam Integer threshold,
+            @RequestParam(required = false) Integer userId
+    ){
+        return Result.success(categoryService.search(q, threshold, userId));
     }
 
     // 文献库详情
