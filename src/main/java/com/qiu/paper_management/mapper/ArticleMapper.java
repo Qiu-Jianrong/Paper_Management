@@ -53,6 +53,6 @@ public interface ArticleMapper {
     List<Integer> findArticleByAuthor(Integer authorId, Integer categoryId);
 
 
-    List<Article> search(String q, Integer threshold, Integer categoryId);
+    List<Article> search(String q, Integer threshold, Integer categoryId, Integer userId);
 
 }

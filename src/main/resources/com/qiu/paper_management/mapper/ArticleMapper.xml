@@ -16,9 +16,12 @@
         </where>
     </select>
     <select id="search" resultType="com.qiu.paper_management.pojo.Article">
-        select distinct id, title, article.keywords, create_time, update_time, score, score_amount from paper_management.article left join paper_management.category_article ca on article.id = ca.article_id where (keywords like #{q} or title like #{q} or paper_abstract like #{q}) and score>= #{threshold}
+        select distinct id, title, article.keywords, create_time, update_time, score, score_amount from paper_management.article left join paper_management.category_article ca on article.id = ca.article_id join paper_management.article_author aa on article.id = aa.article_id where (keywords like #{q} or title like #{q} or paper_abstract like #{q}) and score>= #{threshold}
             <if test="categoryId!=null">
                 and category_id=#{categoryId}
+            </if>
+            <if test="userId!=null">
+                and author_id=#{userId}
             </if>
         order by score
 

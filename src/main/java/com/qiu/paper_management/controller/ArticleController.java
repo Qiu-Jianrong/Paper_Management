@@ -34,9 +34,10 @@ public class ArticleController {
             @RequestParam Integer pageSize,
             @RequestParam String q,
             @RequestParam Integer threshold,
-            @RequestParam(required = false) Integer categoryId
+            @RequestParam(required = false) Integer categoryId,
+            @RequestParam(required = false) Integer userId
     ){
-        PageBean<Article> as = articleService.search(pageNum, pageSize, q, threshold, categoryId);
+        PageBean<Article> as = articleService.search(pageNum, pageSize, q, threshold, categoryId, userId);
         return Result.success(as);
     }
     @GetMapping

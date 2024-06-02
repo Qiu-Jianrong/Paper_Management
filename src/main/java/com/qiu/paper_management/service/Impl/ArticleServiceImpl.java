@@ -98,6 +98,11 @@ public class ArticleServiceImpl implements ArticleService {
         return usernames;
     }
 
+    private void injectCategory(List<Article> articles){
+        for (Article article : articles){
+            article.setCategoryId(articleMapper.findArticleCategory(article.getId()));
+        }
+    }
     @Override
     public List<Article> listMine(Integer categoryId, Integer userId) {
         List<Integer> asId = articleMapper.findArticleByAuthor(userId, categoryId);
@@ -106,12 +111,12 @@ public class ArticleServiceImpl implements ArticleService {
         for (Integer articleId : asId){
             as.add(articleMapper.findById(articleId));
         }
-
+        injectCategory(as);
         return as;
     }
 
     @Override
-    public PageBean<Article> search(Integer pageNum, Integer pageSize, String q, Integer threshold, Integer categoryId) {
+    public PageBean<Article> search(Integer pageNum, Integer pageSize, String q, Integer threshold, Integer categoryId, Integer userId) {
         // 1. 创建pageBean对象
         PageBean pb = new PageBean<Article>();
 
@@ -121,10 +126,11 @@ public class ArticleServiceImpl implements ArticleService {
         // 3. 开启mapper查询
         q = jiebaUtil.parse(q);
         System.out.println(q);
-        List<Article> as =  articleMapper.search(q, threshold, categoryId);
-        for (Article article : as){
-            article.setCategoryId(articleMapper.findArticleCategory(article.getId()));
-        }
+        List<Article> as =  articleMapper.search(q, threshold, categoryId, userId);
+//        for (Article article : as){
+//            article.setCategoryId(articleMapper.findArticleCategory(article.getId()));
+//        }
+        injectCategory(as);
         Page<Article> articles = (Page<Article>) as;
 
         pb.setTotal(articles.getTotal());
@@ -147,9 +153,10 @@ public class ArticleServiceImpl implements ArticleService {
 
         // 3. 开启mapper查询
         List<Article> as =  articleMapper.list(categoryId);
-        for (Article article : as){
-            article.setCategoryId(articleMapper.findArticleCategory(article.getId()));
-        }
+//        for (Article article : as){
+//            article.setCategoryId(articleMapper.findArticleCategory(article.getId()));
+//        }
+        injectCategory(as);
         Page<Article> articles = (Page<Article>) as;
 
         pb.setTotal(articles.getTotal());

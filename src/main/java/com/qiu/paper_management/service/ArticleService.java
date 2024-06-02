@@ -30,5 +30,5 @@ public interface ArticleService {
 
     List<Article> listMine(Integer categoryId, Integer userId);
 
-    PageBean<Article> search(Integer pageNum, Integer pageSize, String q, Integer threshold, Integer categoryId);
+    PageBean<Article> search(Integer pageNum, Integer pageSize, String q, Integer threshold, Integer categoryId, Integer userId);
 }
