@@ -14,4 +14,9 @@ public interface OtherService {
 
 
     List<Comment> getComment(Integer articleId, Integer categoryId);
+
+
+    void deleteComment(Integer commentId);
+
+    Comment getCommentById(Integer commentId, Integer userId);
 }

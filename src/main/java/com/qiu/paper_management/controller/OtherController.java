@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @CrossOrigin
@@ -98,5 +99,20 @@ public class OtherController {
             comment.setCriticEmail(userService.getEmailById(comment.getCriticId()));
         }
         return Result.success(comments);
+    }
+
+    private void isCommentOwner(Integer commentId, Integer userId){
+        Comment comment = otherService.getCommentById(commentId, userId);
+        if (comment == null)
+            throw new RuntimeException("评论不存在或无权操作！");
+    }
+    @DeleteMapping("/comment")
+    public Result deleteComment(@RequestParam Integer commentId){
+//        1. 校验是否有权操作comment
+        isCommentOwner(commentId, ThreadLocalUtil.getId());
+
+//        2. 删除comment
+        otherService.deleteComment(commentId);
+        return Result.success();
     }
 }

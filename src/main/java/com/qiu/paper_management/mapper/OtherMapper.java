@@ -1,10 +1,9 @@
 package com.qiu.paper_management.mapper;
 
 import com.qiu.paper_management.pojo.Comment;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -22,4 +21,11 @@ public interface OtherMapper {
 
 
     List<Comment> getComment(Integer articleId, Integer categoryId);
+
+
+    @Delete("delete from paper_management.comment where comment_id=#{commentId}")
+    void deleteComment(Integer commentId);
+
+    @Select("select * from paper_management.comment where comment_id=#{commentId} and critic_id=#{userId}")
+    Comment getCommentById(Integer commentId, Integer userId);
 }
