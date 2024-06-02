@@ -17,7 +17,13 @@
                 article_id=#{articleId}
             </if>
         </where>
-        order by likes DESC
+        <if test="timeOrder!=true">
+            order by likes DESC
+        </if>
+        <if test="timeOrder!=false">
+            order by update_time DESC
+        </if>
+
     </select>
     <select id="getCommentById" resultType="com.qiu.paper_management.pojo.Comment">
         select * from paper_management.comment where comment_id=#{commentId}

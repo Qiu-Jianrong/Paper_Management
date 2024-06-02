@@ -54,8 +54,8 @@ public class OtherServiceImpl implements OtherService {
     }
 
     @Override
-    public List<Comment> getComment(Integer articleId, Integer categoryId) {
-        return otherMapper.getComment(articleId, categoryId);
+    public List<Comment> getComment(Integer articleId, Integer categoryId, boolean timeOrder) {
+        return otherMapper.getComment(articleId, categoryId, timeOrder);
     }
 
     @Override

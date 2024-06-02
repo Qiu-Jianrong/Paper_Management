@@ -86,12 +86,16 @@ public class OtherController {
     }
 
     @GetMapping("/comment")
-    public Result<List<Comment>> getComment(@RequestParam Integer categoryId, @RequestParam Integer articleId){
+    public Result<List<Comment>> getComment(
+            @RequestParam Integer categoryId,
+            @RequestParam Integer articleId,
+            @RequestParam(required = false, defaultValue = "false") boolean timeOrder
+    ){
         // 1. 校验合法性
         Existence(articleId, categoryId);
 
         // 2. 返回对应评论区
-        List<Comment> comments = otherService.getComment(articleId, categoryId);
+        List<Comment> comments = otherService.getComment(articleId, categoryId, timeOrder);
 
         // 3. 附上评论者头像和email
         for (Comment comment : comments){

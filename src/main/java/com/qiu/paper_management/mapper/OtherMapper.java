@@ -20,7 +20,7 @@ public interface OtherMapper {
     void postComment(Comment comment);
 
 
-    List<Comment> getComment(Integer articleId, Integer categoryId);
+    List<Comment> getComment(Integer articleId, Integer categoryId, boolean timeOrder);
 
 
     @Delete("delete from paper_management.comment where comment_id=#{commentId}")

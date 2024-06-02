@@ -13,7 +13,7 @@ public interface OtherService {
     void postComment(Comment comment);
 
 
-    List<Comment> getComment(Integer articleId, Integer categoryId);
+    List<Comment> getComment(Integer articleId, Integer categoryId, boolean timeOrder);
 
 
     void deleteComment(Integer commentId);
