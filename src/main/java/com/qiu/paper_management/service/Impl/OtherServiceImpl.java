@@ -68,5 +68,10 @@ public class OtherServiceImpl implements OtherService {
         return otherMapper.getCommentById(commentId, userId);
     }
 
+    @Override
+    public void likeComment(Integer commentId) {
+        otherMapper.likeComment(commentId, otherMapper.getCommentById(commentId, null).getLikes()+1);
+    }
+
 
 }

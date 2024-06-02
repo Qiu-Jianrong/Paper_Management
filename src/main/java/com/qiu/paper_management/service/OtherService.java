@@ -19,4 +19,6 @@ public interface OtherService {
     void deleteComment(Integer commentId);
 
     Comment getCommentById(Integer commentId, Integer userId);
+
+    void likeComment(Integer commentId);
 }

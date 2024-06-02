@@ -26,6 +26,9 @@ public interface OtherMapper {
     @Delete("delete from paper_management.comment where comment_id=#{commentId}")
     void deleteComment(Integer commentId);
 
-    @Select("select * from paper_management.comment where comment_id=#{commentId} and critic_id=#{userId}")
+
     Comment getCommentById(Integer commentId, Integer userId);
+
+    @Update("update paper_management.comment set likes=#{likes} where comment_id=#{commentId}")
+    void likeComment(Integer commentId, Integer likes);
 }

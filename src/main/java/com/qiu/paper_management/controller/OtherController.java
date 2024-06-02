@@ -101,6 +101,13 @@ public class OtherController {
         return Result.success(comments);
     }
 
+    @PutMapping("/comment")
+    public Result likeComment(Integer commentId){
+        isCommentOwner(commentId, null);
+        otherService.likeComment(commentId);
+        return Result.success();
+    }
+
     private void isCommentOwner(Integer commentId, Integer userId){
         Comment comment = otherService.getCommentById(commentId, userId);
         if (comment == null)
