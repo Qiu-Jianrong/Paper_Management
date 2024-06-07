@@ -25,4 +25,6 @@ public interface CategoryService {
     void removeArticle(Integer articleId, Integer categoryId);
 
     List<Category> search(String q, Integer threshold, Integer userId);
+
+    Integer findOwnerById(Integer id);
 }

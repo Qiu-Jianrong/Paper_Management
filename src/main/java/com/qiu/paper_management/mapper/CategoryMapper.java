@@ -40,4 +40,7 @@ public interface CategoryMapper {
     void deleteCategoryArticle(Integer categoryId);
 
     List<Category> search(String q, Integer threshold, Integer userId);
+
+    @Select("select create_user from paper_management.category where id=#{id};")
+    Integer findOwnerById(Integer id);
 }

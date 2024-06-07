@@ -85,4 +85,9 @@ public class CategoryServiceImpl implements CategoryService {
         q = "%" + q + "%";
         return categoryMapper.search(q, threshold, userId);
     }
+
+    @Override
+    public Integer findOwnerById(Integer id) {
+        return categoryMapper.findOwnerById(id);
+    }
 }

@@ -65,9 +65,11 @@ public class CategoryController {
     @GetMapping("/detail")
     public Result<Category> categoryDetail(@RequestParam Integer id){
         Category category = categoryService.findCategoryById(id);
+        Integer userId = categoryService.findOwnerById(id);
         if(category == null)
             throw new RuntimeException("抱歉，" + id + "号文献库不存在");
-        if (!category.isCategoryPublic())
+        // 访问别人的文献库是不允许的
+        if (!category.isCategoryPublic() && !Objects.equals(userId, ThreadLocalUtil.getId()))
             throw new RuntimeException("抱歉，该文献库为私有，不允许访问");
         return Result.success(category);
     }
