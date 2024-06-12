@@ -14,7 +14,7 @@
             </if>
     </select>
     <select id="search" resultType="com.qiu.paper_management.pojo.Article">
-        select distinct id, title, article.keywords, article.state, create_time, update_time, score, score_amount from paper_management.article left join paper_management.category_article ca on article.id = ca.article_id join paper_management.article_author aa on article.id = aa.article_id where (keywords like #{q} or title like #{q} or paper_abstract like #{q}) and score>= #{threshold} and state=='已发布'
+        select distinct id, title, article.keywords, article.state, create_time, update_time, score, score_amount from paper_management.article left join paper_management.category_article ca on article.id = ca.article_id join paper_management.article_author aa on article.id = aa.article_id where (keywords like #{q} or title like #{q} or paper_abstract like #{q}) and score>= #{threshold} and state='已发布'
             <if test="categoryId!=null">
                 and category_id=#{categoryId}
             </if>
@@ -25,16 +25,13 @@
 
     </select>
     <select id="findArticleByAuthor" resultType="java.lang.Integer">
-        select distinct article_author.article_id from paper_management.article_author join paper_management.category_article
-        <!--where标签实现可选的条件，用if环绕-->
-        <where>
-            <if test="categoryId!=null">
-                category_id=#{categoryId}
-            </if>
-            <if test="authorId!=null">
-                and author_id=#{authorId}
-            </if>
-        </where>
+        select distinct article_author.article_id from paper_management.article_author join paper_management.category_article where 1=1
+        <if test="categoryId!=null">
+            and category_id=#{categoryId}
+        </if>
+        <if test="authorId!=null">
+            and author_id=#{authorId}
+        </if>
     </select>
     <select id="findArticleCategory" resultType="java.lang.Integer">
         select category_id from paper_management.category_article where article_id=#{articleId};
